@@ -23,7 +23,8 @@ public class UserService {
 		Optional<User> user = userRepository.findByUsername(username);
 		if (user.isPresent()) {
 			System.out.println("Password SHA: " + SHAUtil.createHash(password));
-			if (user.get().getPassword().equals(password)) {
+			if (SHAUtil.verifyHash(password, user.get().getPassword()) ) {
+			//if (user.get().getPassword().equals(password)) {
 				res=true;
 			}// if password
 		}//if isPresent
