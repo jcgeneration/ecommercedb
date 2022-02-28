@@ -1,5 +1,6 @@
 package org.generation.ecommercedb.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.generation.ecommercedb.model.User;
@@ -28,6 +29,32 @@ public class UserService {
 		}//if isPresent
 		return res;
 	}//login
+
+	public List<User> getUsers() {
+		return userRepository.findAll();
+	}//getUsers
+
+	public User getUser(Long userId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public void deleteUser(Long userId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addUser(User user) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void updateUser(Long userId, String currentPassword, String newPassword) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+
 	
 	
 	
