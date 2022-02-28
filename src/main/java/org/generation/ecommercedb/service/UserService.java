@@ -54,16 +54,17 @@ public class UserService {
 			throw new IllegalStateException("El usuario con el nombre " + user.getUsername() 
 		+ " ya existe"); 
 		}// if
-			userRepository.save(user);	
+		user.setPassword( SHAUtil.createHash(user.getPassword()) );	
+		userRepository.save(user);	
 	}// addUser
 
 	public void updateUser(Long userId, String currentPassword, String newPassword) {
 		if (userRepository.existsById(userId)) {
 			User user = userRepository.getById(userId);
 			if ((newPassword !=null) && (currentPassword !=null)) {
-				if ( (user.getPassword().equals(currentPassword)) && 
-					(! user.getPassword().equals(newPassword) ) ) {
-					user.setPassword(newPassword);	
+				if ( (SHAUtil.verifyHash(currentPassword, user.getPassword() ) ) && 
+					(! SHAUtil.verifyHash(newPassword, user.getPassword()) ) ) {
+					user.setPassword(SHAUtil.createHash(newPassword));	
 					userRepository.save(user);
 				} else {
 					throw new IllegalStateException("Contraseña incorrecta");	
