@@ -35,24 +35,47 @@ public class UserService {
 	}//getUsers
 
 	public User getUser(Long userId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		return userRepository.findById(userId).orElseThrow(
+			()-> new IllegalStateException("El usuario con el id " + userId + " no existe")
+			);
+	}// getUser
 
 	public void deleteUser(Long userId) {
-		// TODO Auto-generated method stub
-		
-	}
+		if(userRepository.existsById(userId)) {
+			userRepository.deleteById(userId);
+		} else {
+			throw new IllegalStateException("El usuario con el id " + userId + " no existe");
+		} //else 
+	} // deleteUser
 
 	public void addUser(User user) {
-		// TODO Auto-generated method stub
-		
-	}
+		Optional<User> userByName = userRepository.findByUsername(user.getUsername());
+		if (userByName.isPresent()) {
+			throw new IllegalStateException("El usuario con el nombre " + user.getUsername() 
+		+ " ya existe"); 
+		}// if
+			userRepository.save(user);	
+	}// addUser
 
 	public void updateUser(Long userId, String currentPassword, String newPassword) {
-		// TODO Auto-generated method stub
+		if (userRepository.existsById(userId)) {
+			User user = userRepository.getById(userId);
+			if ((newPassword !=null) && (currentPassword !=null)) {
+				if ( (user.getPassword().equals(currentPassword)) && 
+					(! user.getPassword().equals(newPassword) ) ) {
+					user.setPassword(newPassword);	
+					userRepository.save(user);
+				} else {
+					throw new IllegalStateException("Contraseña incorrecta");	
+				}//else // if equals
+			}else {
+				throw new IllegalStateException("Contraseñas nulas");	
+			}//else  // !=null
+		}else {
+			throw new IllegalStateException("Usuario no encontrado " + userId);	
+		}//else //if existsById
 		
-	}
+	} // updateUser
 	
 
 	
