@@ -12,10 +12,10 @@ public class EcommercedbApplication {
 	@Bean
 	public FilterRegistrationBean<JwtFilter> jwtFilter() {
 		FilterRegistrationBean<JwtFilter> registrationBean =
-				new FilterRegistrationBean<>();
+				new FilterRegistrationBean<>();	
 		registrationBean.setFilter( new JwtFilter());
 		registrationBean.addUrlPatterns("/api/user/*");
-		//registrationBean.addUrlPatterns("/api/productos/");
+	    registrationBean.addUrlPatterns("/api/productos/*");
 		return registrationBean;
 	} // jwtFilter
 	

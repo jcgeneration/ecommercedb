@@ -26,7 +26,7 @@ public class JwtFilter extends GenericFilterBean{
         System.out.println("getRequestURI(): " + httpServletRequest.getRequestURI());
         System.out.println("getMethod " + httpServletRequest.getMethod());
          if ( ("POST".equals(( httpServletRequest.getMethod() ))) ||
-                ("GET".equals(( httpServletRequest.getMethod() )))  ||
+                (("GET".equals(( httpServletRequest.getMethod() ))) && (! httpServletRequest.getRequestURI().contains("/api/productos/"))  ) ||
                 ("DELETE".equals(( httpServletRequest.getMethod() )))  ||
                 ("PUT".equals(( httpServletRequest.getMethod() ))) )  {
             if ( authHeader == null || !authHeader.startsWith( "Bearer " ) )  {
